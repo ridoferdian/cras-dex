@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#18191b">
+  <title>Cras Dex — Refleksi kesiapan project</title>
+  <link rel="stylesheet" href="/style.css">
+  <script type="module" src="/app.js"></script>
+</head>
+<body>
+  <header class="top"><div class="shell header"><strong class="brand"><span>‹›</span> Cras Dex.</strong><div id="identity" hidden><span id="user-label"></span> <button id="logout" class="secondary" type="button">Keluar</button></div></div></header>
+  <main class="shell">
+    <p id="notice" role="status" aria-live="polite"></p>
+    <section id="login-view" class="panel narrow">
+      <p class="eyebrow">Mulai dengan mengenali diri</p><h1>Masuk ke Cras Dex</h1><p>Akun dibuat oleh admin institusi. Masuk untuk menyimpan dan melihat hasil secara aman.</p>
+      <form id="login-form"><label>Email<input name="email" type="email" autocomplete="username" required></label><label>Kata sandi<input name="password" type="password" autocomplete="current-password" required></label><button type="submit">Masuk</button></form>
+    </section>
+    <section id="app-view" hidden>
+      <nav id="nav" aria-label="Navigasi utama"></nav>
+      <div id="student-view" hidden>
+        <div class="intro"><div><p class="eyebrow">Penilaian mandiri</p><h1>Siap mulai project-mu?</h1><p>Kenali kondisimu dan rencanakan langkah berikutnya.</p></div></div>
+        <div id="student-summary" class="summary"></div>
+        <div class="layout">
+          <form id="assessment-form" class="panel">
+            <h2>01 / Ceritakan project-mu</h2>
+            <label>Nama project<input name="namaProject" maxlength="100" required></label>
+            <label>Deskripsi singkat<textarea name="deskripsi" maxlength="500" required></textarea></label>
+            <label>Kategori project<select name="kategoriProject" id="category" required><option value="">Pilih bidang project</option></select></label>
+            <label>Gambar project (opsional)<input id="image-input" type="file" accept="image/png,image/jpeg,image/webp"></label>
+            <div id="image-box" hidden><img id="image-preview" alt="Preview gambar project"><button type="button" class="secondary" id="remove-image">Hapus gambar</button></div>
+            <p id="image-message" class="muted">PNG/JPG/WebP maksimal 5 MB dan 20 megapiksel.</p>
+            <hr><h2>02 / Bagaimana kesiapanmu?</h2>
+            <p id="progress">0 dari 4 indikator terisi</p>
+            <div id="indicator-fields"></div>
+            <div class="actions"><button type="submit" id="save">Simpan penilaian</button><button type="button" id="reset" class="secondary">Mulai ulang</button></div>
+          </form>
+          <aside class="panel result"><h2>Preview kesiapan</h2><div class="score" id="preview-score">— <small>/100</small></div><span class="badge" id="preview-category">Belum dinilai</span>
+            <p id="breakdown"></p><h3>Langkah berikutnya</h3><ul id="advice"></ul>
+            <button type="button" class="secondary" id="method">Bagaimana skor dihitung?</button>
+            <button type="button" id="share-preview" disabled>Bagikan via WhatsApp</button>
+            <p class="muted">Hasil adalah panduan refleksi, bukan penentu mutlak kemampuan atau jaminan keberhasilan.</p></aside>
+        </div>
+      </div>
+      <section id="history-view" hidden><div class="intro"><div><p class="eyebrow">Jejak proses belajar</p><h1>Riwayat penilaian</h1></div></div><div id="history-list" class="cards"></div></section>
+      <section id="lecturer-view" hidden><div class="intro"><div><p class="eyebrow">Dosen</p><h1>Perkembangan mahasiswa bimbingan</h1><p>Periksa indikator, pantau riwayat, dan berikan masukan pada tiap penilaian.</p></div></div><div id="lecturer-summary" class="summary"></div><label>Filter mahasiswa<select id="lecturer-filter"><option value="">Semua mahasiswa</option></select></label><div id="lecturer-list" class="cards"></div></section>
+      <section id="admin-view" hidden>
+        <div class="intro"><div><p class="eyebrow">Administrasi</p><h1>Ringkasan dan pengelolaan aplikasi</h1><p>Pantau penggunaan, kelola metode penilaian, akun, penugasan, dan data penilaian.</p></div></div>
+        <div id="admin-summary" class="summary"></div>
+        <h2>Kategori project</h2><p class="muted">Nonaktifkan kategori yang pernah digunakan agar riwayat lama tetap terbaca.</p>
+        <form id="category-form" class="panel inline-form"><label>Nama kategori baru<input name="name" maxlength="80" required></label><button>Tambah kategori</button></form><div id="categories-list" class="cards"></div>
+        <h2>Indikator dan bobot skor</h2><p class="muted">Ubah label, enam pilihan skala 0–5, saran, dan bobot. Total empat bobot wajib 100. Penilaian lama tetap memakai metode saat disimpan.</p>
+        <form id="indicators-form" class="panel"><div id="indicator-settings" class="settings-grid"></div><button>Simpan metode penilaian</button></form>
+        <h2>Pengguna dan penugasan</h2>
+        <div class="layout">
+          <form id="user-form" class="panel"><h2>Buat akun</h2><label>Nama<input name="name" maxlength="100" required></label><label>Email<input name="email" type="email" required></label><label>Kata sandi awal (minimal 12 karakter)<input name="password" type="password" minlength="12" maxlength="128" required></label><label>Peran<select name="role"><option value="mahasiswa">Mahasiswa</option><option value="dosen">Dosen</option><option value="admin">Admin</option></select></label><button>Buat akun</button></form>
+          <form id="assignment-form" class="panel"><h2>Tugaskan mahasiswa ke dosen</h2><label>Dosen<select id="lecturer-select" required></select></label><label>Mahasiswa<select id="student-select" required></select></label><button>Tugaskan</button></form>
+        </div>
+        <h2>Daftar pengguna</h2><div id="users-list" class="cards"></div>
+        <h2>Penugasan</h2><div id="assignments-list" class="cards"></div>
+        <h2>Seluruh penilaian</h2><p class="muted">Admin dapat menghapus data yang tidak diperlukan setelah konfirmasi. Tindakan tidak dapat dibatalkan.</p><div id="admin-assessments" class="cards"></div>
+      </section>
+      <section class="panel narrow" id="password-section"><h2>Ganti kata sandi</h2><form id="password-form"><label>Kata sandi lama<input name="oldPassword" type="password" autocomplete="current-password" required></label><label>Kata sandi baru (minimal 12 karakter)<input name="newPassword" type="password" autocomplete="new-password" minlength="12" maxlength="128" required></label><button type="submit">Ganti kata sandi</button></form></section>
+    </section>
+  </main>
+  <dialog id="dialog" aria-labelledby="dialog-title"><div class="dialog-head"><h2 id="dialog-title"></h2><button type="button" class="secondary" id="close-dialog" aria-label="Tutup dialog">×</button></div><div id="dialog-content"></div></dialog>
+</body>
+</html>
